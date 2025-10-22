@@ -1,35 +1,44 @@
-// Productos.jsx decido usar el hook useBooks para buscar y mostrar libros 
-// src/pages/Biblioteca.jsx
-import React from "react";
+import React, { useMemo } from "react";
 import useBooks from "../components/UseBooks";
-import { Card, Row, Col, Form } from "react-bootstrap";
+import { Card, Row, Col, Spinner } from "react-bootstrap";
 
-function Biblioteca() {
-  const { books, query, setQuery } = useBooks("");
+function Novedades() {
+  // usamos el hook sin modo aleatorio
+  const { books, loading } = useBooks("new", false);
+
+  // Filtrar los libros de los últimos 25 años y limitar a 12 (por estética)
+  const filteredBooks = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const twentfiveyYearsAgo = currentYear - 25;
+
+    return books
+      .filter(
+        (book) =>
+          book.first_publish_year &&
+          book.first_publish_year >= twentfiveyYearsAgo
+      )
+      .slice(0, 12); // puedes cambiarlo a 10 si prefieres exactamente 10
+  }, [books]);
 
   return (
     <section style={{ padding: "20px" }}>
-      <h2 className="mb-4">📚 Biblioteca</h2>
+      <h2 className="mb-4">🆕 Novedades</h2>
 
-      {/* Buscador */}
-      <Form.Group className="mb-4" style={{ maxWidth: "400px" }}>
-        <Form.Control
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="¿Qué libro deseas buscar?"
-        />
-      </Form.Group>
-
-      {/* Grid de Cards */}
-      <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-        {books.length === 0 && query.trim() === "" ? (
-          <p className="text-muted">Empieza a escribir para ver resultados 📖</p>
-        ) : (
-          books.map((book, index) => (
+      {loading ? (
+        <div className="text-center my-5">
+          <Spinner animation="border" variant="primary" />
+          <p>Cargando novedades...</p>
+        </div>
+      ) : filteredBooks.length === 0 ? (
+        <p className="text-muted">
+          No se encontraron libros recientes 😢
+        </p>
+      ) : (
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+          {filteredBooks.map((book, index) => (
             <Col key={index}>
               <Card className="h-100 shadow-sm">
-                {/* Imagen */}
+                {/* Portada */}
                 {book.cover_i ? (
                   <Card.Img
                     variant="top"
@@ -65,16 +74,19 @@ function Biblioteca() {
                 </Card.Body>
 
                 <Card.Footer className="text-center">
-                  <small className="text-muted">ID: {book.key}</small>
+                  <small className="text-muted">
+                    {book.first_publish_year || "Año desconocido"}
+                  </small>
                 </Card.Footer>
               </Card>
             </Col>
-          ))
-        )}
-      </Row>
+          ))}
+        </Row>
+      )}
     </section>
   );
 }
 
-export default Biblioteca;
+export default Novedades;
+
 

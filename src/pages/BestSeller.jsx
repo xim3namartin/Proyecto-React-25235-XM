@@ -1,39 +1,42 @@
-import React from "react";
+import React, { useMemo } from "react";
 import useBooks from "../components/UseBooks";
-import { Card, Row, Col, Spinner, Form } from "react-bootstrap";
+import { Card, Row, Col, Spinner } from "react-bootstrap";
 
-function Home() {
-  const { books, query, setQuery, loading } = useBooks("", true); // true = modo aleatorio
+function BestSeller() {
+  // usamos el hook sin modo aleatorio ni búsqueda
+  const { books, loading } = useBooks("popular", false);
+
+  // Filtrar los libros publicados en los últimos 30 años y limitar a 15
+  const filteredBooks = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const thirtyYearsAgo = currentYear - 30;
+
+    return books
+      .filter(
+        (book) =>
+          book.first_publish_year &&
+          book.first_publish_year >= thirtyYearsAgo
+      )
+      .slice(0, 15); // mostramos 15 libros
+  }, [books]);
 
   return (
     <section style={{ padding: "20px" }}>
-      <h2 className="mb-4">📚 Bienvenidos</h2>
+      <h2 className="mb-4">🏆 Best Sellers de los ultimos tiempos</h2>
 
-      {/* 🔍 Buscador */}
-      <Form.Group className="mb-4" style={{ maxWidth: "400px" }}>
-        <Form.Control
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="¿Qué libro deseas buscar?"
-        />
-      </Form.Group>
-
-      {/* 📖 Lista de libros */}
       {loading ? (
         <div className="text-center my-5">
           <Spinner animation="border" variant="primary" />
-          <p>Cargando libros...</p>
+          <p>Cargando best sellers…</p>
         </div>
-      ) : books.length === 0 ? (
-        <p className="text-muted">
-          No se encontraron resultados para tu búsqueda 😢
-        </p>
+      ) : filteredBooks.length === 0 ? (
+        <p className="text-muted">No se encontraron libros populares recientes 😢</p>
       ) : (
         <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-          {books.map((book, index) => (
+          {filteredBooks.map((book, index) => (
             <Col key={index}>
               <Card className="h-100 shadow-sm">
+                {/* Portada */}
                 {book.cover_i ? (
                   <Card.Img
                     variant="top"
@@ -56,10 +59,9 @@ function Home() {
                   </div>
                 )}
 
+                {/* Info */}
                 <Card.Body>
-                  <Card.Title style={{ fontSize: "16px" }}>
-                    {book.title}
-                  </Card.Title>
+                  <Card.Title style={{ fontSize: "16px" }}>{book.title}</Card.Title>
                   {book.author_name && (
                     <Card.Text className="text-muted" style={{ fontSize: "14px" }}>
                       {book.author_name.join(", ")}
@@ -81,4 +83,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default BestSeller;

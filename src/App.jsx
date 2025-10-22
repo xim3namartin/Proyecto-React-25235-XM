@@ -5,13 +5,12 @@ import { Container } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Login from './components/Login';
 
 
 import Home from "./pages/Home";
-import Clientes from "./pages/Clientes";
-import Biblioteca from "./pages/Biblioteca";
-import Servicios from "./pages/Servicios";
-import Contacto from "./pages/Contacto";
+import BestSeller from "./pages/BestSeller";
+import Novedades from "./pages/Novedades";
 
 function App() {
 
@@ -22,14 +21,11 @@ function App() {
                 <Container>
                   <Routes>
                     <Route path="/" element={<Home/>} />
-                    
-                    <Route path="/clientes" element={<Clientes/>} />
+                     <Route path="/administracion" element={<Login />} />
+                     
+                    <Route path="/BestSeller" element={<BestSeller/>} />
 
-                    <Route path="/Biblioteca" element={<Biblioteca/>} />
-
-                    <Route path="/servicios" element={<Servicios/>} />
-
-                    <Route path="/contacto" element={<Contacto/>} />
+                    <Route path="/Novedades" element={<Novedades/>} />
 
                   </Routes>
                 </Container>

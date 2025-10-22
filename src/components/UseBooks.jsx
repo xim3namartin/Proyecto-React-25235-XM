@@ -1,28 +1,51 @@
-// Este hook solo trae los libros y devuelve el estado
-
 import { useState, useEffect } from "react";
-
-function useBooks(initialQuery = "") {
+function useBooks(initialQuery = "", random = false) {
   const [query, setQuery] = useState(initialQuery);
   const [books, setBooks] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (!query.trim()) {
-      setBooks([]); // limpiar si no hay búsqueda
+    setLoading(true);
+    // Si estamos en modo aleatorio y no hay búsqueda del usuario:
+    const randomTopics = [
+      "love",
+      "science",
+      "fantasy",
+      "history",
+      "art",
+      "adventure",
+      "magic",
+      "war",
+      "space",
+      "life",
+    ];
+    let searchTerm = "";
+    if (query.trim() !== "") {
+      // el usuario está buscando
+      searchTerm = query.trim();
+    } else if (random) {
+      // modo aleatorio sin búsqueda
+      const randomWord =
+        randomTopics[Math.floor(Math.random() * randomTopics.length)];
+      searchTerm = randomWord;
+    } else {
+      setBooks([]);
+      setLoading(false);
       return;
     }
-
-    fetch(`https://openlibrary.org/search.json?title=${query}`)
+    fetch(`https://openlibrary.org/search.json?title=${searchTerm}`)
       .then((res) => res.json())
       .then((data) => {
-        setBooks(data.docs.slice(0, 12)); // tomar primeros 12 resultados
+        const shuffled = data.docs.sort(() => 0.5 - Math.random()).slice(0, 10);
+        setBooks(shuffled);
+        setLoading(false);
       })
-      .catch((err) => console.error(err));
-  }, [query]);
-
-  return { books, query, setQuery };
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [query, random]);
+  return { books, query, setQuery, loading };
 }
-
 export default useBooks;
 
 
