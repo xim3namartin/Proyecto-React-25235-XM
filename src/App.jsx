@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useBooks from './components/UseBooks';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Container } from 'react-bootstrap'
@@ -13,6 +13,15 @@ import BestSeller from "./pages/BestSeller";
 import Novedades from "./pages/Novedades";
 
 function App() {
+
+    useEffect(() => {
+    document.body.style.backgroundColor = "#fff6ed"; // fondo crema suave
+    document.body.style.color = "#333"; // texto oscuro
+    document.body.style.fontFamily = "'Segoe UI', 'Roboto', sans-serif";
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+    document.body.style.transition = "background-color 0.4s ease";
+  }, []);
 
   return (
 

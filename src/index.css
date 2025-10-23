@@ -28,6 +28,13 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+
+  /* tono del fondo*/
+  background-color: #f0e6d2; /* tono crema suave */
+  color: #3e3a34; /* texto cálido oscuro */
+  font-family: 'Segoe UI', 'Roboto', sans-serif; /* tipografía legible */
+  padding: 0;
+
 }
 
 h1 {
@@ -65,4 +72,18 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.card {
+  background-color: #ffffff;
+  color: #3e3a34;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
