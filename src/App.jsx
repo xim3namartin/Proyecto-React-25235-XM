@@ -6,6 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from './components/Login';
+import { CartProvider } from './components/CartContext';
+import Carrito from './components/Carrito'; 
+import CrudProductos from './components/CrudProductos';
 
 
 import Home from "./pages/Home";
@@ -25,6 +28,7 @@ function App() {
 
   return (
 
+      <CartProvider>
         <Router>
           <Header/>
                 <Container>
@@ -35,11 +39,16 @@ function App() {
                     <Route path="/BestSeller" element={<BestSeller/>} />
 
                     <Route path="/Novedades" element={<Novedades/>} />
+                    
+                     <Route path="/carrito" element={<Carrito />} />
+
+                    <Route path="/crud" element={<CrudProductos />} />
 
                   </Routes>
                 </Container>
           <Footer/>          
         </Router>
+        </CartProvider>
   )
 }
 

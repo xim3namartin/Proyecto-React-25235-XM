@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import useBooks from "../components/UseBooks";
 import { Card, Row, Col, Spinner, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Swal from "sweetalert2";
+import { CartContext } from "../components/CartContext"; // importa tu contexto
+
 
 function Home() {
   const { books, query, setQuery, loading } = useBooks("", true); // true = modo aleatorio
+  const { agregarAlCarrito } = useContext(CartContext); // usa el contexto
+  
+  const getPrecioAleatorio = () => {
+    return Math.floor(Math.random() * 41) + 10;  // Precio entre 10 y 50 euros
+  };
 
   return (
     <section 
@@ -96,7 +104,7 @@ function Home() {
                 )}
 
                 <Card.Body>
- <div>
+                 <div>
             <Card.Title style={{ fontSize: "16px", fontWeight: 600 }}>
               {book.title}
             </Card.Title>
@@ -122,32 +130,50 @@ function Home() {
                     Año: {book.first_publish_year || "desconocido"}
                   </small>
               </Card.Footer>
+
             {/* 🔹 Botón Agregar al carrito */}
-          <button
-            onClick={() => alert("Se agregó al carrito")}
-            style={{
-              marginTop: "10px",
-              padding: "8px 14px",
-              backgroundColor: "#f8ca9fff", // tono terracota
-              color: "#1f1d1dff",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "500",
-              transition: "background-color 0.3s ease, transform 0.2s ease",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.backgroundColor = "#b85c5c";
-              e.currentTarget.style.transform = "scale(1.05)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.backgroundColor = "#f8ca9fff";
-              e.currentTarget.style.transform = "scale(1)";
-            }}
-          >
-             <FontAwesomeIcon icon={faShoppingCart} size="lg" />
-          </button>
+        <button
+          onClick={() => {
+            agregarAlCarrito({
+              id: book.key, // usa un identificador único
+              title: book.title,
+              author: book.author_name ? book.author_name.join(", ") : "Desconocido",
+              year: book.first_publish_year || "desconocido",
+              price: getPrecioAleatorio(),
+            }); 
+
+            Swal.fire({
+              title: "¡Producto agregado!",
+              text: "El libro se añadió correctamente al carrito.",
+              icon: "success",
+              confirmButtonText: "Ok",
+              confirmButtonColor: "#b85c5c",
+            });
+          }}
+          style={{
+            marginTop: "10px",
+            padding: "8px 14px",
+            backgroundColor: "#f8ca9fff",
+            color: "#1f1d1dff",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontSize: "14px",
+            fontWeight: "500",
+            transition: "background-color 0.3s ease, transform 0.2s ease",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.backgroundColor = "#b85c5c";
+            e.currentTarget.style.transform = "scale(1.05)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.backgroundColor = "#f8ca9fff";
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+        >
+          <FontAwesomeIcon icon={faShoppingCart} size="lg" />
+        </button>
+
               </Card>
             </Col>
           ))}
