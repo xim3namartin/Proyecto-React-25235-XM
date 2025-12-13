@@ -19,12 +19,32 @@ function BestSeller() {
           book.first_publish_year &&
           book.first_publish_year >= thirtyYearsAgo
       )
-      .slice(0, 15); // mostramos 15 libros
+      .slice(0, 15); // se muestran 15 libros
   }, [books]);
 
   return (
-    <section style={{ padding: "20px" }}>
-      <h2 className="mb-4">🏆 Best Sellers de los ultimos tiempos</h2>
+    <section style={{ padding: "20px",  }}>
+            <h2
+        className="mb-4 text-center"
+        style={{
+          fontWeight: "600",
+          color: "#241c19ff",
+        }}
+      >
+        📚 Bestseller
+      </h2>
+      <p
+        style={{
+          fontStyle: "italic",
+          color: "#181312ff",
+          marginBottom: "30px",
+          fontSize: "22px",
+          textAlign: "center",
+          fontFamily: "Playfair Display, serif",
+        }}
+      >
+        Descubre los libros más vendidos de la última década.
+      </p>
 
       {loading ? (
         <div className="text-center my-5">

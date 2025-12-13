@@ -42,7 +42,8 @@ function Home() {
               fontSize: "16px",
               transition: "all 0.3s ease",
               outline: "none",
-              textAlign: "center"
+              textAlign: "center",
+
             }}
             onFocus={(e) => e.target.style.boxShadow = "0 4px 12px rgba(0,0,0,0.12)"}
             onBlur={(e) => e.target.style.boxShadow = "0 2px 6px rgba(0,0,0,0.08)"}
@@ -70,7 +71,7 @@ function Home() {
                 boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
                 transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 overflow: "hidden",
-                borderColor: "#aea5a5ff"
+                borderColor: "#aea5a5ff",
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.transform = "translateY(-4px)";
@@ -82,28 +83,42 @@ function Home() {
               }}
         >
                 {book.cover_i ? (
-                  <Card.Img
-                    variant="top"
-                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                    alt={book.title}
-                    style={{ height: "250px", objectFit: "cover" }}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      height: "250px",
-                      background: "#eee",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Sin portada
-                  </div>
-                )}
+                <div style={{ height: "320px", overflow: "visible" }}>
+              <Card.Img
+                variant="top"
+                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
+                alt={book.title}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
+                }}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "cover",
+                  boxShadow: "0 6px 14px rgba(0,0,0,0.25)",
+                  filter: "contrast(1.15) saturate(1.25) brightness(1.05)",
+                  transition: "transform 0.3s ease, filter 0.3s ease"
+                }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                height: "320px",
+                background: "#eee",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontStyle: "italic",
+              }}
+            >
+              Sin portada
+            </div>
+          )}
 
-                <Card.Body>
+
+                <Card.Body style={{ paddingTop: "20px" }}>
                  <div>
             <Card.Title style={{ fontSize: "16px", fontWeight: 600 }}>
               {book.title}

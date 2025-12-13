@@ -27,6 +27,10 @@ const Header = () => {
         background: "linear-gradient(90deg, #d48c8c, #b85c5c)",
         color: "#fff",
         transition: "background 0.3s ease",
+          fontFamily: "Playfair Display, serif",
+          fontWeight: "600",
+          fontSize: "18px",
+          textTransform: "uppercase",
       }}
     >
       <Container>
@@ -47,7 +51,8 @@ const Header = () => {
             icon={faBook}
             size="2x"
             className="me-2"
-            style={{ color: "#2e2a27" }}
+            style={{ color: "#2e2a27", fontFamily: "'Montserrat', sans-serif",
+         }}
           />
           Libriando
 
