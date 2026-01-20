@@ -1,8 +1,38 @@
-# React + Vite
+# React Front-End Project – Etapa Dos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project was developed using **React** as part of my training in modern front-end development. It includes reusable components, state management, and basic navigation.
 
-Currently, two official plugins are available:
+## ⚛️ Main Features
+- Functional components built with React
+- State management using useState
+- Navigation between views
+- Custom styling
+- Modular and scalable structure
+
+## 🛠️ Technologies Used
+- React
+- JavaScript / JSX
+- Vite (if applicable)
+- CSS
+- Git & GitHub
+
+## 🔗 Live Demo
+https://etapa-dos.vercel.app](https://proyecto-react-25235-xm.vercel.app/
+
+
+## 🎯 Project Objective
+Learn the fundamentals of the React ecosystem by building dynamic interfaces and organizing a modern front-end project.
+
+## ▶️ How to Run the Project
+```bash
+git clone <repository-url>
+cd etapa-dos
+npm install
+npm run dev
+
+
+
+## two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
