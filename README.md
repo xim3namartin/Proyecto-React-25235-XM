@@ -1,4 +1,4 @@
-# React Front-End Project – Etapa Dos
+# React Front-End Project – Library
 
 This project was developed using **React** as part of my training in modern front-end development. It includes reusable components, state management, and basic navigation.
 
@@ -17,7 +17,7 @@ This project was developed using **React** as part of my training in modern fron
 - Git & GitHub
 
 ## 🔗 Live Demo
-https://etapa-dos.vercel.app](https://proyecto-react-25235-xm.vercel.app/
+https://proyecto-react-25235-xm.vercel.app/
 
 
 ## 🎯 Project Objective
